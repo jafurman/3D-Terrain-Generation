@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
@@ -9,6 +9,7 @@ public class MeshGenerator : MonoBehaviour
     Vector3[] vertices;
     int[] triangles;
     Color[] colors;
+    Vector3[] normals;
 
     public int xSize = 20;
     public int zSize = 20;
@@ -19,8 +20,17 @@ public class MeshGenerator : MonoBehaviour
     private float minTerrainHeight;
     private float maxTerrainHeight;
 
+    public List<Vector3> spawnPoints = new List<Vector3>();
+    public GameObject grassPrefab, TreePrefab, Tree2Prefab;
+
+    public int grassMaxHeight;
+
+    public int maxSpawnedPrefabs;
+    private int spawnedPrefabs;
+
     void Start()
     {
+        spawnedPrefabs = 0;
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
 
@@ -30,6 +40,7 @@ public class MeshGenerator : MonoBehaviour
         MeshCollider meshCollider = GetComponent<MeshCollider>();
         meshCollider.sharedMesh = mesh;
 
+        spawnPrefabs();
     }
 
     void createShape()
@@ -65,6 +76,7 @@ public class MeshGenerator : MonoBehaviour
                 }
 
                 vertices[i] = new Vector3(x * scale, y, z * scale);
+
                 i++;
             }
         }
@@ -109,7 +121,65 @@ public class MeshGenerator : MonoBehaviour
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.colors = colors;
-
         mesh.RecalculateNormals();
+        normals = mesh.normals;
+
+        List<Vector3> vertexes = vertices.ToList();
+        for (int i = 0; i < vertexes.Count; i++)
+        {
+            if (vertexes[i].y >= 2 && vertexes[i].y < grassMaxHeight)
+            {
+                spawnPoints.Add(vertexes[i]);
+            }
+        }
+    }
+
+    void spawnPrefabs()
+    {
+        for (int i = 0; i < spawnPoints.Count; i++)
+        {
+            Vector3 position = spawnPoints[i];
+            Quaternion rotation = Quaternion.FromToRotation(Vector3.up, normals[i]);
+
+            Transform[] children = grassPrefab.GetComponentsInChildren<Transform>(true);
+
+            List<Transform> childList = new List<Transform>();
+            foreach (Transform child in children)
+            {
+                if (child != grassPrefab.transform)
+                {
+                    childList.Add(child);
+                }
+            }
+
+            int randomIndex = Random.Range(0, childList.Count);
+            Transform selectedChild = childList[randomIndex];
+
+            selectedChild.gameObject.SetActive(true);
+            Instantiate(selectedChild.gameObject, position, rotation);
+
+            spawnChance(TreePrefab, 2, position);
+            spawnChance(Tree2Prefab, 2, position);
+        }
+    }
+
+    void spawnChance(GameObject prefab, int chance, Vector3 spawnPoint)
+    {
+        int rand = Random.Range(0,101);
+        if (rand <= chance && spawnedPrefabs <= maxSpawnedPrefabs)
+        {
+            spawnPoint.y -= 1f;
+            Instantiate(prefab, spawnPoint, Quaternion.identity);
+            spawnedPrefabs++;
+        }
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        for (int i = 0; i < spawnPoints.Count; i++)
+        {
+            Gizmos.DrawSphere(spawnPoints[i], 0.1f);
+        }
     }
 }

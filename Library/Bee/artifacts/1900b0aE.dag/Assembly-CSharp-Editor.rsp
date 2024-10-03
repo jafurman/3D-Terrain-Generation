@@ -378,7 +378,7 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.38f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.38f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Editor/InteractableEditor.cs"
-"Assets/LowPolyWater_Pack/Scripts/Editor/GeneratePlane.cs"
+"Assets/Packages/LowPolyWater_Pack/Scripts/Editor/GeneratePlane.cs"
 -langversion:9.0
 /deterministic
 /optimize+

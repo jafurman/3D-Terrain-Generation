@@ -710,7 +710,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 1}
+  m_Color: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
   m_Intensity: 0.6
   m_Range: 10
   m_SpotAngle: 30
@@ -870,7 +870,7 @@ Transform:
   m_GameObject: {fileID: 760409066}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -14, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -938,7 +938,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22e9c96b628ca7489d8b6e0204e346f, type: 2}
+  - {fileID: 2100000, guid: b7adadfddf24e2445b69e24170012cfb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -969,7 +969,7 @@ Transform:
   m_GameObject: {fileID: 842815511}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30, y: -15, z: -80}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1028,6 +1028,12 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+  spawnPoints: []
+  grassPrefab: {fileID: 1070872740842444010, guid: f805ea97dc5de644d99fc9823e79e075, type: 3}
+  TreePrefab: {fileID: 1600545553093010, guid: d855296cdd38f1d43a9018c918395080, type: 3}
+  Tree2Prefab: {fileID: 1955936618837180, guid: 465cbb465c9880c45887d824bd1f720b, type: 3}
+  grassMaxHeight: 6
+  maxSpawnedPrefabs: 600
 --- !u!1 &893310059
 GameObject:
   m_ObjectHideFlags: 0
@@ -2212,27 +2218,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7094670312235901782, guid: 3834013fec23b634fba9adb527714ea7, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.15
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7094670312235901782, guid: 3834013fec23b634fba9adb527714ea7, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.15
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7094670312235901782, guid: 3834013fec23b634fba9adb527714ea7, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.15
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7094670312235901782, guid: 3834013fec23b634fba9adb527714ea7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.64
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7094670312235901782, guid: 3834013fec23b634fba9adb527714ea7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.88
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7094670312235901782, guid: 3834013fec23b634fba9adb527714ea7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.3
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7094670312235901782, guid: 3834013fec23b634fba9adb527714ea7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2240,15 +2246,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7094670312235901782, guid: 3834013fec23b634fba9adb527714ea7, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7094670312235901782, guid: 3834013fec23b634fba9adb527714ea7, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7094670312235901782, guid: 3834013fec23b634fba9adb527714ea7, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7094670312235901782, guid: 3834013fec23b634fba9adb527714ea7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2336,8 +2342,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1004037053}
-  xSensitivity: 20
-  ySensitivity: 20
+  xSensitivity: 15
+  ySensitivity: 15
 --- !u!65 &9026477564733943422
 BoxCollider:
   m_ObjectHideFlags: 0
