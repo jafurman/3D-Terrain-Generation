@@ -156,22 +156,34 @@ public class MeshGenerator : MonoBehaviour
             Transform selectedChild = childList[randomIndex];
 
             selectedChild.gameObject.SetActive(true);
-            Instantiate(selectedChild.gameObject, position, rotation);
+            Vector3 pos = position;
+            pos.y -= .05f;
+            Instantiate(selectedChild.gameObject, pos, rotation);
 
-            spawnChance(TreePrefab, 2, position);
-            spawnChance(Tree2Prefab, 2, position);
+            if (spawnedPrefabs < maxSpawnedPrefabs)
+            {
+                if (spawnChance(TreePrefab, 2, position))
+                {
+                    spawnedPrefabs++;
+                }
+                if (spawnChance(Tree2Prefab, 2, position))
+                {
+                    spawnedPrefabs++;
+                }
+            }
         }
     }
 
-    void spawnChance(GameObject prefab, int chance, Vector3 spawnPoint)
+    bool spawnChance(GameObject prefab, int chance, Vector3 spawnPoint)
     {
-        int rand = Random.Range(0,101);
-        if (rand <= chance && spawnedPrefabs <= maxSpawnedPrefabs)
+        int rand = Random.Range(0, 2500);
+        if (rand <= chance)
         {
             spawnPoint.y -= 1f;
             Instantiate(prefab, spawnPoint, Quaternion.identity);
-            spawnedPrefabs++;
+            return true;
         }
+        return false;
     }
 
     void OnDrawGizmos()

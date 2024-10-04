@@ -2192,6 +2192,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 425754993477887066, guid: 3834013fec23b634fba9adb527714ea7, type: 3}
+      propertyPath: m_Height
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1991593902578315103, guid: 3834013fec23b634fba9adb527714ea7, type: 3}
       propertyPath: m_Name
       value: You
@@ -2218,15 +2222,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7094670312235901782, guid: 3834013fec23b634fba9adb527714ea7, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.2
+      value: 0.38
       objectReference: {fileID: 0}
     - target: {fileID: 7094670312235901782, guid: 3834013fec23b634fba9adb527714ea7, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.2
+      value: 0.38
       objectReference: {fileID: 0}
     - target: {fileID: 7094670312235901782, guid: 3834013fec23b634fba9adb527714ea7, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.2
+      value: 0.38
       objectReference: {fileID: 0}
     - target: {fileID: 7094670312235901782, guid: 3834013fec23b634fba9adb527714ea7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2234,7 +2238,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7094670312235901782, guid: 3834013fec23b634fba9adb527714ea7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 30
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7094670312235901782, guid: 3834013fec23b634fba9adb527714ea7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2323,11 +2327,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 268ca69897ff144489db10cb32338646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  gravity: -9.8
-  jumpHeight: 0.2
+  speed: 1.5
+  gravity: -7.5
+  jumpHeight: 0.3
   isSprinting: 0
-  sprintSpeed: 2
+  sprintSpeed: 2.25
   sprintDuration: 4
 --- !u!114 &9026477564733943417
 MonoBehaviour:
@@ -2342,8 +2346,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1004037053}
-  xSensitivity: 15
-  ySensitivity: 15
+  xSensitivity: 5
+  ySensitivity: 5
 --- !u!65 &9026477564733943422
 BoxCollider:
   m_ObjectHideFlags: 0
