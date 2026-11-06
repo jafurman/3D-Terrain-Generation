@@ -1,19 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; // Import the SceneManagement namespace
 
 public class Lever : Interactable
 {
-    [SerializeField]
-    public GameObject door;
-    private bool doorOpen;
-    // Start is called before the first frame update
+    public string scene;
+    private FadeManager fadeManager;
+
     void Start()
     {
-        
+        fadeManager = FindObjectOfType<FadeManager>();
     }
 
-    // Update is called once per frame
     public void BaseInteract()
     {
         Interact();
@@ -21,7 +20,15 @@ public class Lever : Interactable
 
     protected override void Interact()
     {
-        doorOpen = !doorOpen;
-        door.GetComponent<Animator>().SetBool("IsOpen", doorOpen);
+        if (fadeManager != null)
+        {
+            fadeManager.FadeToScene(scene);
+        }
+        else
+        {
+            Debug.LogWarning("FadeManager not found. Loading scene without fade.");
+            SceneManager.LoadScene(scene);
+        }
     }
 }
+

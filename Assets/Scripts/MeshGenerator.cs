@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -21,12 +22,22 @@ public class MeshGenerator : MonoBehaviour
     private float maxTerrainHeight;
 
     public List<Vector3> spawnPoints = new List<Vector3>();
-    public GameObject grassPrefab, TreePrefab, Tree2Prefab;
+    public GameObject grassPrefab, TreePrefab, Tree2Prefab, septapodPrefab, towerPrefab, batteryPrefab;
 
     public int grassMaxHeight;
 
     public int maxSpawnedPrefabs;
     private int spawnedPrefabs;
+
+    private int septadpods = 0;
+    public int maxSeptapods;
+
+    private int towers = 0;
+    public int maxTowers;
+
+    private int batteries = 0;
+    public int maxBatteries;
+    public GameObject gameEndingPrefab;
 
     void Start()
     {
@@ -41,6 +52,20 @@ public class MeshGenerator : MonoBehaviour
         meshCollider.sharedMesh = mesh;
 
         spawnPrefabs();
+
+        // Calculate the index of the vertex at (65, y, 65)
+        int vertCountX = Mathf.FloorToInt(xSize / scale);
+        int vertCountZ = Mathf.FloorToInt(zSize / scale);
+        int xIndex = Mathf.FloorToInt(65 / scale);
+        int zIndex = Mathf.FloorToInt(65 / scale);
+        int vertexIndex = zIndex * (vertCountX + 1) + xIndex;
+
+        // Get the y value of the vertex at (65, y, 65)
+        float yValue = vertices[vertexIndex].y + 1.5f;
+
+        // Set the endSpawn position
+        Vector3 endSpawn = new Vector3(65, yValue, 65);
+        Instantiate(gameEndingPrefab, endSpawn, Quaternion.identity);
     }
 
     void createShape()
@@ -61,9 +86,9 @@ public class MeshGenerator : MonoBehaviour
                 float offsetX = (float)random.NextDouble() * 0.1f;
                 float offsetZ = (float)random.NextDouble() * 0.1f;
 
-                float y = Mathf.PerlinNoise((x * 0.3f * scale) + baseRandX + offsetX, (z * 0.3f * scale) + baseRandZ + offsetZ) * 2f;
-                y += Mathf.PerlinNoise((x * 0.1f * scale) + baseRandX + offsetX, (z * 0.1f * scale) + baseRandZ + offsetZ) * 4f;
-                y -= Mathf.PerlinNoise((x * 0.05f * scale) + baseRandX + offsetX, (z * 0.05f * scale) + baseRandZ + offsetZ) * 3f;
+                float y = Mathf.PerlinNoise((x * 0.3f * scale) + baseRandX + offsetX, (z * 0.3f * scale) + baseRandZ + offsetZ) * 1.5f;
+                y += Mathf.PerlinNoise((x * 0.1f * scale) + baseRandX + offsetX, (z * 0.1f * scale) + baseRandZ + offsetZ) * 3.5f;
+                y -= Mathf.PerlinNoise((x * 0.05f * scale) + baseRandX + offsetX, (z * 0.05f * scale) + baseRandZ + offsetZ) * 2.25f;
                 y *= 2.6f;
 
                 if (y > maxTerrainHeight)
@@ -162,36 +187,58 @@ public class MeshGenerator : MonoBehaviour
 
             if (spawnedPrefabs < maxSpawnedPrefabs)
             {
-                if (spawnChance(TreePrefab, 2, position))
+                if (spawnChance(TreePrefab, 2f, position))
                 {
                     spawnedPrefabs++;
                 }
-                if (spawnChance(Tree2Prefab, 2, position))
+                if (spawnChance(Tree2Prefab, 2f, position))
                 {
                     spawnedPrefabs++;
                 }
+                if (septadpods <= maxSeptapods)
+                {
+                    if (spawnChance(septapodPrefab, .00000005f, position))
+                    {
+                        septadpods++;
+                        spawnedPrefabs++;
+                    }
+                }
+                if (towers <= maxTowers)
+                {
+                    if (spawnChance(towerPrefab, .00000005f, position))
+                    {
+                        towers++;
+                        spawnedPrefabs++;
+                    }
+                }
+                if (batteries <= maxBatteries)
+                {
+                    if (spawnChance(batteryPrefab, 2f, position))
+                    {
+                        batteries++;
+                        spawnedPrefabs++;
+                    }
+                }
+
             }
         }
     }
 
-    bool spawnChance(GameObject prefab, int chance, Vector3 spawnPoint)
+    bool spawnChance(GameObject prefab, float chance, Vector3 spawnPoint)
     {
-        int rand = Random.Range(0, 2500);
+        float rand = Random.Range(0, 1800);
         if (rand <= chance)
         {
-            spawnPoint.y -= 1f;
+            if (prefab == batteryPrefab)
+            {
+                spawnPoint.y += .1f;
+            } else 
+            {
+                spawnPoint.y -= 1f;
+            }
             Instantiate(prefab, spawnPoint, Quaternion.identity);
             return true;
         }
         return false;
-    }
-
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        for (int i = 0; i < spawnPoints.Count; i++)
-        {
-            Gizmos.DrawSphere(spawnPoints[i], 0.1f);
-        }
     }
 }
